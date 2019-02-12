@@ -1,0 +1,4 @@
+3 MARRY CHRIST 2.53 CSE
+4 aaa doe 4.00 AMS
+5 john doe 4.00 AMS
+3.51

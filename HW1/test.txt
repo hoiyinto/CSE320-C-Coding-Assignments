@@ -1,0 +1,5 @@
+ADD 3 john doe 3.43 ams
+ADD 5 mary jane 3.87 art
+ADD 4 mary jane 3.87 ART
+UPDATE 4 hey jane 3.87 cse
+DELETE 5

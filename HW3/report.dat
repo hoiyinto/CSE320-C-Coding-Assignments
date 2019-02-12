@@ -1,0 +1,46 @@
+Bugs/errors in wallet_stat.c
+
+line 4: Invalid preprocessing directive #inlcude. 
+	Changed it to #include instead.
+
+line 5: In order to use functions like strcmp(), we need to include the string library.
+
+line 6: Added #include <unistd.h> in order to call fork(),and execvp() later in the program.
+
+line 64: It should be scanf instead of fscanf, since we are reading the filename from stdin.
+
+line 72: Again, it should be scanf instead of fscanf, since we are reading the user's chosen command from stdin.
+
+line 76: The 2nd argument of the function execvp() could not be null.
+	It should be an array of pointers which is terminated by a NULL pointer.
+	The first argument, by convention, should point to the filename associated with the file being executed. 
+
+line 75: Declared and initialized an array in order for execvp() to work.
+
+line 79: I used top and found that if we call sleep(), it will create a zombie process each time we choose the help command since the child process is never reaped.To avoid zombie process, we should use wait() instead.
+
+line 7 : Included the <sys/wait.h> library to use the wait() function.
+
+line 32 : The generate_wallets() function should take two arguments, a pointer pointing to the wallet array and the number of wallets read from the file it should generate.  
+	  Otherwise it will generate 5000000 wallets no matter what, which will result in segmentation fault since we only allocate memory for num_wallets wallets.
+
+line 44: fprintf() the format for printing both the key and money should be %u since they are uint32_t. 
+	 Also,it was originally printing keys twice.
+
+line 10: Money should be an uint32_t since money_gen() returns an uint32_t. 
+
+line 13: In the print_help() function, I added a command information since print_help.o is only showing 2 command options and 'quit' is missing. Added print_help() on line 80.
+
+line 111: To avoid memory leak, we need to call free() on those allocated memory blocks and fclose(file pointer) before exiting the program.
+
+line 101: It's safer to use strcpy() when we change the filename.
+
+line 45: Use fflush(fp) to force data to be printed on the file right away.
+
+line 93: Added constraints on the 'print' command. If wallets are not yet generated. Their infomation could not be printed. Otherwise all the wallet's key and money will be just zero.
+
+
+Bugs/errors in print_help
+
+I used valgrind to run print_help and found that there's invalid pointer used. I believe it reads a char outside of the string length bound. It resulted in a segmentation fault.
+
